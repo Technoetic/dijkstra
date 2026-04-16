@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>다익스트라 알고리즘 튜토리얼 - 지도 앱처럼 배우는 최단 경로</title>
+    <meta name="description" content="네이버 지도, 카카오맵, 구글맵처럼 가장 빠른 길을 찾는 방법. 초보자를 위한 인터랙티브 다익스트라 튜토리얼." />
+    <meta name="theme-color" content="#f8f8f7" />
+    <link rel="modulepreload" href="data:text/javascript;base64,aW1wb3J0IHsgQXBwIH0gZnJvbSAiLi9qcy9hcHAuanMiOwppbXBvcnQgewoJaW5pdEVycm9yVHJhY2tpbmcsCglpbml0UGVyZm9ybWFuY2VNb25pdG9yaW5nLAp9IGZyb20gIi4vanMvbW9uaXRvcmluZy5qcyI7Cgppbml0RXJyb3JUcmFja2luZygpOwppbml0UGVyZm9ybWFuY2VNb25pdG9yaW5nKCk7CgpmdW5jdGlvbiBib290KCkgewoJY29uc3QgZG9tID0gewoJCXN2ZzogZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImdyYXBoLXN2ZyIpLAoJCWRpc3RhbmNlVGFibGU6IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkaXN0YW5jZS10YWJsZSIpLAoJCXBxOiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicHEtdmlldyIpLAoJCW5hcnJhdGlvbjogZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm5hcnJhdGlvbiIpLAoJCWNvbnRyb2xzOiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29udHJvbHMiKSwKCQlxdWl6OiBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicXVpei1yb290IiksCgl9OwoJaWYgKCFkb20uc3ZnKSByZXR1cm47Cgl0cnkgewoJCXdpbmRvdy5fX2FwcCA9IG5ldyBBcHAoZG9tKTsKCX0gY2F0Y2ggKGVycikgewoJCWNvbnNvbGUuZXJyb3IoIltkaWprc3RyYS10dXRvcmlhbF0g7LSI6riw7ZmUIOyLpO2MqDoiLCBlcnIpOwoJCWlmIChkb20ubmFycmF0aW9uKSB7CgkJCWRvbS5uYXJyYXRpb24udGV4dENvbnRlbnQgPSBg7LSI6riw7ZmUIOyYpOulmDogJHtlcnIgaW5zdGFuY2VvZiBFcnJvciA/IGVyci5tZXNzYWdlIDogU3RyaW5nKGVycil9YDsKCQl9Cgl9Cn0KCmlmIChkb2N1bWVudC5yZWFkeVN0YXRlID09PSAibG9hZGluZyIpIHsKCWRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCBib290KTsKfSBlbHNlIHsKCWJvb3QoKTsKfQo=" />
+    <script type="module" crossorigin src="./assets/index-C4QyRSjN.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/style-CWz0X7Le.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="site-header__brand" href="#top">다익스트라 튜토리얼</a>
+        <nav aria-label="주요 섹션" class="site-header__nav">
+          <a href="#why">왜</a>
+          <a href="#intuition">직관</a>
+          <a href="#visualizer">시각화</a>
+          <a href="#steps">의사코드</a>
+          <a href="#quiz">퀴즈</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section id="hero" class="section section--hero">
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="eyebrow">INTERACTIVE TUTORIAL</p>
+            <h1 class="hero__title">가장 빠른 길,<br />컴퓨터는 어떻게 찾을까?</h1>
+            <p class="hero__lede">
+              네이버 지도, 카카오맵, 구글맵이 매일 수천만 번 쓰는 그 알고리즘.
+              직접 한 걸음씩 돌려 보며 배워보세요.
+            </p>
+            <a href="#visualizer" class="btn btn--primary">지금 체험하기</a>
+          </div>
+          <div class="hero__art" aria-hidden="true">
+            <svg viewBox="0 0 320 240" class="hero-svg" role="img">
+              <circle cx="40" cy="200" r="14" class="node node--start" />
+              <circle cx="160" cy="60" r="12" class="node" />
+              <circle cx="280" cy="120" r="12" class="node" />
+              <circle cx="200" cy="200" r="14" class="node node--goal" />
+              <line x1="40" y1="200" x2="160" y2="60" class="edge" />
+              <line x1="160" y1="60" x2="280" y2="120" class="edge" />
+              <line x1="280" y1="120" x2="200" y2="200" class="edge" />
+              <line x1="40" y1="200" x2="200" y2="200" class="edge edge--path" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- WHY -->
+      <section id="why" class="section">
+        <div class="container">
+          <h2 class="section__title">어디에 쓰일까?</h2>
+          <div class="cards-3">
+            <article class="card">
+              <h3 class="card__title">네이버 지도</h3>
+              <p>출발지와 도착지를 입력하면 도로망 수천만 개 노드에서 최단 경로를 찾습니다.</p>
+            </article>
+            <article class="card">
+              <h3 class="card__title">카카오맵</h3>
+              <p>대중교통 환승 최적화도 가중치가 다른 그래프 탐색입니다.</p>
+            </article>
+            <article class="card">
+              <h3 class="card__title">구글맵</h3>
+              <p>세계 지도에서 목적지까지의 거리와 시간을 다익스트라 변형으로 계산합니다.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTUITION -->
+      <section id="intuition" class="section section--alt">
+        <div class="container intuition__grid">
+          <div class="intuition__art" aria-hidden="true">
+            <svg viewBox="0 0 300 300" class="wave-svg" role="img">
+              <circle cx="150" cy="150" r="30" class="wave wave--1" />
+              <circle cx="150" cy="150" r="70" class="wave wave--2" />
+              <circle cx="150" cy="150" r="110" class="wave wave--3" />
+              <circle cx="150" cy="150" r="10" class="wave__center" />
+            </svg>
+          </div>
+          <ol class="intuition__steps">
+            <li><strong>출발점에서 물결이 퍼집니다.</strong> 가까운 곳부터 먼저 도달합니다.</li>
+            <li><strong>각 지점까지 지금까지 알아낸 최단 거리</strong>를 기록합니다.</li>
+            <li><strong>가장 가까운 미방문 지점</strong>을 꺼내 이웃을 갱신합니다. 도착할 때까지 반복.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- VISUALIZER -->
+      <section id="visualizer" class="section">
+        <div class="container">
+          <h2 class="section__title">직접 돌려보기</h2>
+          <p class="section__lede">강남역에서 홍대입구까지. 한 스텝씩 눌러보세요.</p>
+
+          <div class="viz">
+            <div class="viz__main">
+              <svg id="graph-svg" class="graph-svg" viewBox="0 0 600 400" role="img" aria-label="다익스트라 그래프"></svg>
+            </div>
+            <aside class="viz__side">
+              <div class="panel">
+                <h3 class="panel__title">거리 테이블</h3>
+                <table id="distance-table" class="distance-table">
+                  <thead><tr><th>노드</th><th>거리</th><th>이전</th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <div class="panel">
+                <h3 class="panel__title">우선순위 큐</h3>
+                <ol id="pq-view" class="pq-view"></ol>
+              </div>
+              <div class="panel">
+                <h3 class="panel__title">설명</h3>
+                <p id="narration" class="narration" aria-live="polite">시작 버튼을 눌러보세요.</p>
+              </div>
+            </aside>
+          </div>
+
+          <div class="controls" id="controls">
+            <button type="button" class="btn" data-action="reset" aria-label="초기화">초기화</button>
+            <button type="button" class="btn" data-action="step-back" aria-label="이전 스텝">◀ 이전</button>
+            <button type="button" class="btn btn--primary" data-action="play-toggle" aria-label="재생/일시정지">재생</button>
+            <button type="button" class="btn" data-action="step-forward" aria-label="다음 스텝">다음 ▶</button>
+            <label class="speed-control">
+              <span class="speed-control__label">속도</span>
+              <input type="range" data-action="speed" min="200" max="2000" step="200" value="800" aria-label="재생 속도 조절" />
+              <output class="speed-control__value">0.8초</output>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEPS / pseudocode -->
+      <section id="steps" class="section section--alt">
+        <div class="container">
+          <h2 class="section__title">의사코드</h2>
+          <pre class="code"><code>function dijkstra(graph, start):
+    dist[*] = ∞
+    dist[start] = 0
+    pq = MinHeap()
+    pq.push(0, start)
+    while pq not empty:
+        (d, u) = pq.pop()
+        if d &gt; dist[u]: continue
+        for (v, w) in graph.neighbors(u):
+            if dist[u] + w &lt; dist[v]:
+                dist[v] = dist[u] + w
+                pq.push(dist[v], v)
+    return dist</code></pre>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section id="quiz" class="section">
+        <div class="container">
+          <h2 class="section__title">퀴즈</h2>
+          <div id="quiz-root" class="quiz"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2026 다익스트라 튜토리얼 · 학습 목적 오픈소스</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
